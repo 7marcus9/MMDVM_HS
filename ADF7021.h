@@ -250,6 +250,101 @@ www.analog.com/media/en/technical-documentation/data-sheets/ADF7021.pdf
 #define AFC_OFFSET_NXDN          0
 #endif
 
+/****** Support for 19.68 MHz TCXO ******/
+#elif defined(ADF7021_19_68)
+
+// R = 4
+// DEMOD_CLK = -.---- MHz (DSTAR)
+// DEMOD_CLK = 4.9200 MHz (DMR, YSF_H, YSF_L, P25)
+// DEMOD_CLK = -.---- MHz (NXDN)
+#define ADF7021_PFD              4920000.0
+
+// PLL (REG 01)
+#define ADF7021_REG1_VHF1        0x021F5021
+#define ADF7021_REG1_VHF2        0x00000000 //TODO: NOT USED!
+#define ADF7021_REG1_UHF1        0x00575021
+#define ADF7021_REG1_UHF2        0x00000000 //TODO: NOT USED!
+
+// Deviation of modulator (REG 02)
+#define ADF7021_DEV_DSTAR        26U //TODO: NOT USED!
+#define ADF7021_DEV_DMR          17U
+#define ADF7021_DEV_YSF_L        10U //TODO: NOT USED!
+#define ADF7021_DEV_YSF_H        19U //TODO: NOT USED!
+#if defined(ENABLE_P25_WIDE)
+#define ADF7021_DEV_P25          19U //TODO: NOT USED!
+#else
+#define ADF7021_DEV_P25          13U //TODO: NOT USED!
+#endif
+#define ADF7021_DEV_NXDN         8U //TODO: NOT USED!
+
+// TX/RX CLOCK register (REG 03)
+#define ADF7021_REG3_DSTAR       0x00000000  //TODO: NOT USED!
+#if defined(TEST_DAC)
+//#define ADF7021_REG3_DMR         0x29EC0493
+//#define ADF7021_REG3_YSF_L       0x29EC0493
+//#define ADF7021_REG3_YSF_H       0x29EC0493
+//#define ADF7021_REG3_P25         0x29EC0493
+//#define ADF7021_REG3_NXDN        0x29EC0493
+#else
+#define ADF7021_REG3_DMR         0x2b148123
+#define ADF7021_REG3_YSF_L       0x2b148123
+#define ADF7021_REG3_YSF_H       0x2b148123
+#define ADF7021_REG3_P25         0x2b148123
+#define ADF7021_REG3_NXDN        0x29ECA113  //TODO: NOT USED!
+#endif
+
+// Discriminator bandwith, demodulator (REG 04)
+// Bug in ADI evaluation software, use datasheet formula (4FSK)
+#define ADF7021_DISC_BW_DSTAR    522U // K=85
+#define ADF7021_DISC_BW_DMR      393U // K=32
+#define ADF7021_DISC_BW_YSF_L    393U // K=32
+#define ADF7021_DISC_BW_YSF_H    516U // K=28
+#define ADF7021_DISC_BW_P25      394U // K=32
+#define ADF7021_DISC_BW_NXDN     295U // K=32
+
+// Post demodulator bandwith (REG 04)
+#define ADF7021_POST_BW_DSTAR    10U
+#define ADF7021_POST_BW_DMR      150U
+#define ADF7021_POST_BW_YSF      20U
+#define ADF7021_POST_BW_P25      6U
+#define ADF7021_POST_BW_NXDN     7U
+
+// IF filter (REG 05)
+#define ADF7021_REG5             0x00003155
+
+// IF CAL (fine cal, defaults) (REG 06)
+#define ADF7021_REG6             0x50972d6 //TODO: IF_CAL_DWELL_TIME
+
+// AFC (REG 10)
+#define ADF7021_REG10_DSTAR      0xc96355a
+
+#if defined(ADF7021_ENABLE_4FSK_AFC)
+#define ADF7021_REG10_DMR        0x1fe355a
+#define ADF7021_REG10_YSF        0x1fe355a
+#define ADF7021_REG10_P25        0x1fe355a
+#define ADF7021_REG10_NXDN       0x1fe355a
+#if defined(ADF7021_AFC_POS)
+#define AFC_OFFSET_DMR           -250
+#define AFC_OFFSET_YSF           -250
+#define AFC_OFFSET_P25           -250
+#define AFC_OFFSET_NXDN          -250
+#else
+#define AFC_OFFSET_DMR           250
+#define AFC_OFFSET_YSF           250
+#define AFC_OFFSET_P25           250
+#define AFC_OFFSET_NXDN          250
+#endif
+#else
+#define ADF7021_REG10_DMR        0x049e354a
+#define ADF7021_REG10_YSF        0x049e354a
+#define ADF7021_REG10_P25        0x049e354a
+#define ADF7021_REG10_NXDN       0x049e354a
+#define AFC_OFFSET_DMR           0
+#define AFC_OFFSET_YSF           0
+#define AFC_OFFSET_P25           0
+#define AFC_OFFSET_NXDN          0
+#endif
+
 #endif
 
 // Slicer threshold for 4FSK demodulator (REG 13)
