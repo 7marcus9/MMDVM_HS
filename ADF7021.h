@@ -260,14 +260,14 @@ www.analog.com/media/en/technical-documentation/data-sheets/ADF7021.pdf
 #define ADF7021_PFD              4920000.0
 
 // PLL (REG 01)
-#define ADF7021_REG1_VHF1        0x021F5021
-#define ADF7021_REG1_VHF2        0x00000000 //TODO: NOT USED!
-#define ADF7021_REG1_UHF1        0x00575021
-#define ADF7021_REG1_UHF2        0x00000000 //TODO: NOT USED!
+#define ADF7021_REG1_VHF1        0x021F5041
+#define ADF7021_REG1_VHF2        0x021F4041 //TODO: NOT USED!
+#define ADF7021_REG1_UHF1        0x00575041
+#define ADF7021_REG1_UHF2        0x00535041 //TODO: NOT USED!
 
 // Deviation of modulator (REG 02)
 #define ADF7021_DEV_DSTAR        26U //TODO: NOT USED!
-#define ADF7021_DEV_DMR          17U
+#define ADF7021_DEV_DMR          18U
 #define ADF7021_DEV_YSF_L        10U //TODO: NOT USED!
 #define ADF7021_DEV_YSF_H        19U //TODO: NOT USED!
 #if defined(ENABLE_P25_WIDE)
@@ -278,7 +278,7 @@ www.analog.com/media/en/technical-documentation/data-sheets/ADF7021.pdf
 #define ADF7021_DEV_NXDN         8U //TODO: NOT USED!
 
 // TX/RX CLOCK register (REG 03)
-#define ADF7021_REG3_DSTAR       0x00000000  //TODO: NOT USED!
+#define ADF7021_REG3_DSTAR       0x2b148123  //TODO: NOT USED!
 #if defined(TEST_DAC)
 //#define ADF7021_REG3_DMR         0x29EC0493
 //#define ADF7021_REG3_YSF_L       0x29EC0493
@@ -313,7 +313,8 @@ www.analog.com/media/en/technical-documentation/data-sheets/ADF7021.pdf
 #define ADF7021_REG5             0x00003155
 
 // IF CAL (fine cal, defaults) (REG 06)
-#define ADF7021_REG6             0x50972d6 //TODO: IF_CAL_DWELL_TIME
+//#define ADF7021_REG6             0x50972d6 //TODO: IF_CAL_DWELL_TIME
+#define ADF7021_REG6             0x50972b6 //TOOL GENERATED
 
 // AFC (REG 10)
 #define ADF7021_REG10_DSTAR      0xc96355a
